@@ -44,13 +44,13 @@ These results establish the development build and checks, not a production deplo
 
 ## Submission repository
 
-The source mirror is [public on GitHub](https://github.com/ritik9879/airwise-ai-promptwars-challenge-6). The GitHub branch listing returned exactly `main`. The GitHub repository-size API returned `0` KB; the checked-out source tree measured 380 KB excluding `.git`, dependencies, and generated output. A credential-marker scan found no likely API keys or tokens, and only `.env.example` is present. The managed Webdev repository remains canonical; this public GitHub repository is a separate source mirror, not a repository switch.
+The source mirror is [public on GitHub](https://github.com/ritik9879/airwise-ai-promptwars-challenge-6). The GitHub branch listing returned exactly `main`. The GitHub repository-size API returned `0` KB; the checked-out source tree measured 388 KB excluding `.git`, dependencies, and generated output. A credential-marker scan found no likely API keys or tokens, and only `.env.example` is present. The managed Webdev repository remains canonical; this public GitHub repository is a separate source mirror, not a repository switch.
 
 ## Submission-compliance checklist
 
 - [x] Public GitHub repository created and verified: [AirWise AI](https://github.com/ritik9879/airwise-ai-promptwars-challenge-6).
 - [x] Exactly one repository branch verified: `main`.
-- [x] Size remains below 10 MB: GitHub's API returned 0 KB; the checked-out project source measured 380 KB, excluding Git metadata, installed dependencies, and build output.
+- [x] Size remains below 10 MB: GitHub's API returned 0 KB; the checked-out project source measured 388 KB, excluding Git metadata, installed dependencies, and build output.
 - [x] Source, tests, setup instructions, environment example, Dockerfile, license, data/method notes, demo script, and verification notes are present.
 - [x] `.env` is ignored and absent; `.env.example` contains placeholders; no likely credential strings were detected in the committed source scan.
 - [x] TypeScript check, all 30 automated tests, production build, health endpoint, and route manifest passed.

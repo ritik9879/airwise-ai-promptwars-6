@@ -89,7 +89,7 @@ A Dockerfile builds the client and starts the Express server on `PORT` (default 
 
 ## Public source repository
 
-Source is available at [github.com/ritik9879/airwise-ai-promptwars-challenge-6](https://github.com/ritik9879/airwise-ai-promptwars-challenge-6). The repository is public; GitHub's branch listing contains exactly one branch, `main`. The checked-out source tree measured 380 KB excluding Git metadata, dependencies, and generated build output. The GitHub repository-size API reported 0 KB; both measurements are below the challenge's 10 MB limit. The repository contains source, tests, documentation, and deployment files, but no `.env` file or detected credential strings.
+Source is available at [github.com/ritik9879/airwise-ai-promptwars-challenge-6](https://github.com/ritik9879/airwise-ai-promptwars-challenge-6). The repository is public; GitHub's branch listing contains exactly one branch, `main`. The checked-out source tree measured 388 KB excluding Git metadata, dependencies, and generated build output. The GitHub repository-size API reported 0 KB; both measurements are below the challenge's 10 MB limit. The repository contains source, tests, documentation, and deployment files, but no `.env` file or detected credential strings.
 
 ## Security, privacy, and accessibility
 
