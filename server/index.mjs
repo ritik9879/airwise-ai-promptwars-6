@@ -17,7 +17,8 @@ if (production) {
   });
 } else {
   const { createServer } = await import('vite');
-  const vite = await createServer({ root, server: { middlewareMode: true }, appType: 'custom' });
+  // SPA mode installs Vite's HTML fallback so `/` serves index.html in the managed Preview.
+  const vite = await createServer({ root, server: { middlewareMode: true }, appType: 'spa' });
   app.use(vite.middlewares);
   app.use((error, _req, res, _next) => {
     vite.ssrFixStacktrace(error);
