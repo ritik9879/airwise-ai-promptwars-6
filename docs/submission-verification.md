@@ -1,6 +1,6 @@
 # AirWise AI — submission verification
 
-**Checked:** 2026-11-21 · **Status:** source submission prepared; production deployment not published.
+**Checked:** 2026-11-22 · **Status:** source submission prepared; production deployment published and live-checked.
 
 ## Feature verification
 
@@ -16,7 +16,7 @@
 | English and Hindi | Partial localization | Core navigation, search, status, dashboard AQI states and recommendations, and fallback assistant guidance can be localized. Long-form planner, indoor, mobility, family, and community copy remains partly English. |
 | Accessibility and responsive UI | Implemented in code; manual audit incomplete | Includes semantic regions, skip navigation, form labels, status text beyond color, visible focus, responsive navigation/layout, chart descriptions, and reduced-motion styles. Automated UI tests pass. Full keyboard-only, screen-reader, contrast, and WCAG 2.2 AA audits were not completed. |
 | Privacy and API security | Implemented; automated checks partial | API input validation, rate limits, timeouts, small request bounds, short in-memory caches, safe plain-text AI rendering, no chat/database persistence, and server-side credentials. Project-level website analytics injection is disabled; platform/CDN analytics may remain. This is not a formal security audit. |
-| Deployment | Prepared, not published | Managed container configuration uses `Dockerfile` and `/api/health`. A Dockerfile is present. `publishing.auto_publish` is off; no production build/deployment was published or live-tested, so there is no deployment URL. |
+| Deployment | Published; public endpoints verified | The live app is [airwiseai-657kapul.manus.space](https://airwiseai-657kapul.manus.space/). On 2026-11-22, the homepage and `/api/health` returned HTTP 200; the health endpoint returned `{"status":"ok","service":"AirWise AI"}`. This confirms availability at verification time, not a long-term uptime guarantee. |
 | Documentation and demo | Prepared | See [README](../README.md), [data and methods](data-and-methods.md), and [demo script](demo-script.md). No recording or screenshot is claimed. |
 
 ## Challenge scenarios
@@ -32,7 +32,7 @@
 
 ## Reproducible checks
 
-Final Sandbox verification on 2026-11-21:
+Final Sandbox verification on 2026-11-22:
 
 - `pnpm typecheck` — passed.
 - `pnpm test` — passed: 3 test files, 30 tests.
@@ -40,20 +40,20 @@ Final Sandbox verification on 2026-11-21:
 - `GET /api/health` — returned `{"status":"ok","service":"AirWise AI"}`.
 - `GET /manus-routes.json` — returned the single SPA route `/`.
 
-These results establish the development build and checks, not a production deployment or complete manual accessibility review.
+These checks establish the application build and test status. The live deployment was separately verified by public HTTPS requests; they do not replace a complete manual accessibility or security audit.
 
 ## Submission repository
 
-The source mirror is [public on GitHub](https://github.com/ritik9879/airwise-ai-promptwars-challenge-6). The GitHub branch listing returned exactly `main`. The GitHub repository-size API returned `0` KB; the checked-out source tree measured 388 KB excluding `.git`, dependencies, and generated output. A credential-marker scan found no likely API keys or tokens, and only `.env.example` is present. The managed Webdev repository remains canonical; this public GitHub repository is a separate source mirror, not a repository switch.
+The requested submission repository is [public on GitHub](https://github.com/ritik9879/airwise-ai-promptwars). Final branch count, GitHub-reported size including history, credential scan, and file-presence checks are recorded below after publication. The managed Webdev repository remains canonical; this public GitHub repository is a separate source mirror, not a repository switch.
 
 ## Submission-compliance checklist
 
-- [x] Public GitHub repository created and verified: [AirWise AI](https://github.com/ritik9879/airwise-ai-promptwars-challenge-6).
-- [x] Exactly one repository branch verified: `main`.
-- [x] Size remains below 10 MB: GitHub's API returned 0 KB; the checked-out project source measured 388 KB, excluding Git metadata, installed dependencies, and build output.
-- [x] Source, tests, setup instructions, environment example, Dockerfile, license, data/method notes, demo script, and verification notes are present.
-- [x] `.env` is ignored and absent; `.env.example` contains placeholders; no likely credential strings were detected in the committed source scan.
+- [ ] Public GitHub repository created and verified: [AirWise AI](https://github.com/ritik9879/airwise-ai-promptwars).
+- [ ] Exactly one repository branch verified: `main`.
+- [ ] Repository size, including Git history, verified below 10 MB using GitHub's repository-size API.
+- [ ] Source, tests, setup instructions, environment example, Dockerfile, license, data/method notes, demo script, and verification notes are present.
+- [ ] `.env` is ignored and absent; `.env.example` contains placeholders; no likely credential strings were detected in the committed source scan.
 - [x] TypeScript check, all 30 automated tests, production build, health endpoint, and route manifest passed.
-- [x] Deployment state is reported accurately: container configuration is ready, publication has not occurred, auto-publish is off, and no production URL is claimed.
+- [x] Deployment state is reported accurately: the live deployment URL and HTTP 200 checks are documented; availability is not represented as a guarantee.
 - [ ] Complete manual keyboard-only, screen-reader, cross-device, and WCAG 2.2 AA review remains outstanding.
 - [ ] A demo recording has not been made; the repository contains only the recording script and checklist.

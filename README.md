@@ -85,11 +85,11 @@ Verified in the current Sandbox on 2026-11-21: `pnpm typecheck` passed; `pnpm te
 
 ## Deployment
 
-A Dockerfile builds the client and starts the Express server on `PORT` (default 3000); `/api/health` is an unauthenticated health check. The managed container deployment is configured to use `Dockerfile` and `/api/health`, but it has **not** been published. Automatic publication is off, and there is no live deployment URL to report.
+A Dockerfile builds the client and starts the Express server on `PORT` (default 3000); `/api/health` is an unauthenticated health check. The managed container deployment is live at [airwiseai-657kapul.manus.space](https://airwiseai-657kapul.manus.space/). On 2026-11-22, the public homepage and `/api/health` both returned HTTP 200; the health response was `{"status":"ok","service":"AirWise AI"}`.
 
 ## Public source repository
 
-Source is available at [github.com/ritik9879/airwise-ai-promptwars-challenge-6](https://github.com/ritik9879/airwise-ai-promptwars-challenge-6). The repository is public; GitHub's branch listing contains exactly one branch, `main`. The checked-out source tree measured 388 KB excluding Git metadata, dependencies, and generated build output. The GitHub repository-size API reported 0 KB; both measurements are below the challenge's 10 MB limit. The repository contains source, tests, documentation, and deployment files, but no `.env` file or detected credential strings.
+The complete source submission is published at [github.com/ritik9879/airwise-ai-promptwars](https://github.com/ritik9879/airwise-ai-promptwars). It contains the application source, tests, documentation, environment example, and deployment files. Branch count, GitHub-reported repository size including history, and final publication checks are recorded in [the submission verification matrix](docs/submission-verification.md).
 
 ## Security, privacy, and accessibility
 
