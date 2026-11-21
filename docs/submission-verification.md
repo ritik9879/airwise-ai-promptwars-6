@@ -45,13 +45,13 @@ These checks establish the application build and test status. The live deploymen
 
 ## Submission repository
 
-The requested repository is [public on GitHub](https://github.com/ritik9879/airwise-ai-promptwars) (GitHub API `private: false`, `visibility: public`); its branch listing contains exactly `main`, and the public page returned HTTP 200. GitHub's repository API reported `size: 0` KB. An independent clean `git clone --mirror` contained 74 reachable objects, a 98.55 KiB pack, and occupied 228 KiB including Git metadata and history—well below the 10 MB limit. The remote tree contains all 46 project files, including the required source, tests, docs, lockfile, environment example, Dockerfile, and license. A scan of every reachable historical blob found no `.env`/credential files and no matches for common API-key/token patterns. The managed Webdev repository remains canonical; this public GitHub repository is a separate source mirror, not a repository switch.
+The requested repository is [public on GitHub](https://github.com/ritik9879/airwise-ai-promptwars) (GitHub API `private: false`, `visibility: public`); its branch listing contains exactly `main`, and the public page returned HTTP 200. GitHub's repository API reported `size: 0` KB. At commit `9f6e11fc91995581b039c687d073ce478569973a` (2026-11-22), an independent clean `git clone --mirror` contained 79 reachable objects, a 99.98 KiB pack, and occupied 232 KiB including Git metadata and history—well below the 10 MB limit. The remote tree contains all 46 project files, including the required source, tests, docs, lockfile, environment example, Dockerfile, and license. A scan of every reachable historical blob found no `.env`/credential files and no matches for common API-key/token patterns. The managed Webdev repository remains canonical; this public GitHub repository is a separate source mirror, not a repository switch.
 
 ## Submission-compliance checklist
 
 - [x] Public GitHub repository created and verified: [AirWise AI](https://github.com/ritik9879/airwise-ai-promptwars); repository metadata reports `private: false` and `visibility: public`.
 - [x] Exactly one repository branch verified: `main`.
-- [x] Repository including Git history is below 10 MB: independent mirror clone measured 228 KiB total with a 98.55 KiB Git pack; GitHub API reported 0 KB.
+- [x] Repository including Git history is below 10 MB: at commit `9f6e11f`, independent mirror clone measured 232 KiB total with a 99.98 KiB Git pack; GitHub API reported 0 KB.
 - [x] All 46 remote tree entries and essential source, tests, setup instructions, environment example, Dockerfile, license, methods, demo, and verification files are present.
 - [x] `.gitignore` excludes `.env`; `.env.example` has blank placeholders; no `.env` or credential-pattern matches were found in the complete reachable history.
 - [x] TypeScript check, all 30 automated tests, production build, health endpoint, and route manifest passed.
