@@ -81,15 +81,19 @@ pnpm test
 pnpm build
 ```
 
-Verified in the current Sandbox on 2026-11-21: `pnpm typecheck` passed; `pnpm test` passed (3 test files, 30 tests); `pnpm build` passed (Vite production bundle: 1587 modules). A live `/api/health` request returned `{"status":"ok","service":"AirWise AI"}`, and `/manus-routes.json` returned the single `/` route. One earlier Open-Meteo request for Delhi successfully returned modeled U.S. AQI and pollutant fields; this is a one-time observation, not a provider-availability guarantee. The API fixtures verify Unix-to-ISO timestamp normalization, while the browser formats chart labels in the selected location's timezone. Automated checks do not replace manual assistive-technology or all-device review.
+Verified in the current Sandbox on 2026-11-21: `pnpm typecheck` passed; `pnpm test` passed (3 test files, 30 tests); `pnpm build` passed (Vite production bundle: 1587 modules). A live `/api/health` request returned `{"status":"ok","service":"AirWise AI"}`, and `/manus-routes.json` returned the single `/` route. One earlier Open-Meteo request for Delhi successfully returned modeled U.S. AQI and pollutant fields; this is a one-time observation, not a provider-availability guarantee. The API fixtures verify Unix-to-ISO timestamp normalization, while the browser formats both the current timestamp and chart labels in the selected location's timezone. Automated checks do not replace manual assistive-technology or all-device review. See the [feature and submission verification matrix](docs/submission-verification.md) for per-area evidence and unverified items.
 
 ## Deployment
 
-A Dockerfile builds the client and starts the Express server on `PORT` (default 3000); `/api/health` is an unauthenticated health check. The project is prepared for a managed container deployment. The deployment configuration/publication state and any public source repository are reported only after they are actually created and verified; this README does not claim a published application URL.
+A Dockerfile builds the client and starts the Express server on `PORT` (default 3000); `/api/health` is an unauthenticated health check. The managed container deployment is configured to use `Dockerfile` and `/api/health`, but it has **not** been published. Automatic publication is off, and there is no live deployment URL to report.
+
+## Public source repository
+
+Source is available at [github.com/ritik9879/airwise-ai-promptwars-challenge-6](https://github.com/ritik9879/airwise-ai-promptwars-challenge-6). The repository is public; GitHub's branch listing contains exactly one branch, `main`. The checked-out source tree measured 380 KB excluding Git metadata, dependencies, and generated build output. The GitHub repository-size API reported 0 KB; both measurements are below the challenge's 10 MB limit. The repository contains source, tests, documentation, and deployment files, but no `.env` file or detected credential strings.
 
 ## Security, privacy, and accessibility
 
-The server validates inputs, limits JSON payloads and requests, applies upstream timeouts, uses short in-memory caches, and bounds assistant output. Same-origin API calls avoid permissive CORS. Private Manus credentials remain server-side. AI output is rendered as plain React text rather than injected HTML. AirWise does not store user accounts, chat history, medical records, or household profiles. The selected language alone is remembered in local storage; other preferences stay in memory.
+The server validates inputs, limits JSON payloads and requests, applies upstream timeouts, uses short in-memory caches, and bounds assistant output. Same-origin API calls avoid permissive CORS. Private Manus credentials remain server-side. AI output is rendered as plain React text rather than injected HTML. AirWise does not store user accounts, chat history, medical records, or household profiles. The selected language alone is remembered in local storage; other preferences stay in memory. Project-level website analytics injection is disabled. Platform or CDN analytics may still remain.
 
 The interface provides semantic landmarks and controls, skip navigation, visible keyboard focus, labels, `aria-live` updates, explicit status words in addition to color, responsive layout, and `prefers-reduced-motion`. Automated interaction checks supplement, but do not replace, manual assistive-technology review.
 
