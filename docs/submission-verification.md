@@ -37,22 +37,23 @@ Final Sandbox verification on 2026-11-22:
 - `pnpm typecheck` — passed.
 - `pnpm test` — passed: 3 test files, 30 tests.
 - `pnpm build` — passed: Vite transformed 1,587 modules.
-- `GET /api/health` — returned `{"status":"ok","service":"AirWise AI"}`.
-- `GET /manus-routes.json` — returned the single SPA route `/`.
+- Production server (`NODE_ENV=production PORT=4177 node server/index.mjs`) — started; `/` returned HTTP 200.
+- `GET /api/health` — returned `{"status":"ok","service":"AirWise AI"}` locally and on the public deployment.
+- `GET /manus-routes.json` — returned the single SPA route `/` locally and on the public deployment.
 
 These checks establish the application build and test status. The live deployment was separately verified by public HTTPS requests; they do not replace a complete manual accessibility or security audit.
 
 ## Submission repository
 
-The requested submission repository is [public on GitHub](https://github.com/ritik9879/airwise-ai-promptwars). Final branch count, GitHub-reported size including history, credential scan, and file-presence checks are recorded below after publication. The managed Webdev repository remains canonical; this public GitHub repository is a separate source mirror, not a repository switch.
+The requested repository is [public on GitHub](https://github.com/ritik9879/airwise-ai-promptwars) (GitHub API `private: false`, `visibility: public`); its branch listing contains exactly `main`, and the public page returned HTTP 200. GitHub's repository API reported `size: 0` KB. An independent clean `git clone --mirror` contained 74 reachable objects, a 98.55 KiB pack, and occupied 228 KiB including Git metadata and history—well below the 10 MB limit. The remote tree contains all 46 project files, including the required source, tests, docs, lockfile, environment example, Dockerfile, and license. A scan of every reachable historical blob found no `.env`/credential files and no matches for common API-key/token patterns. The managed Webdev repository remains canonical; this public GitHub repository is a separate source mirror, not a repository switch.
 
 ## Submission-compliance checklist
 
-- [ ] Public GitHub repository created and verified: [AirWise AI](https://github.com/ritik9879/airwise-ai-promptwars).
-- [ ] Exactly one repository branch verified: `main`.
-- [ ] Repository size, including Git history, verified below 10 MB using GitHub's repository-size API.
-- [ ] Source, tests, setup instructions, environment example, Dockerfile, license, data/method notes, demo script, and verification notes are present.
-- [ ] `.env` is ignored and absent; `.env.example` contains placeholders; no likely credential strings were detected in the committed source scan.
+- [x] Public GitHub repository created and verified: [AirWise AI](https://github.com/ritik9879/airwise-ai-promptwars); repository metadata reports `private: false` and `visibility: public`.
+- [x] Exactly one repository branch verified: `main`.
+- [x] Repository including Git history is below 10 MB: independent mirror clone measured 228 KiB total with a 98.55 KiB Git pack; GitHub API reported 0 KB.
+- [x] All 46 remote tree entries and essential source, tests, setup instructions, environment example, Dockerfile, license, methods, demo, and verification files are present.
+- [x] `.gitignore` excludes `.env`; `.env.example` has blank placeholders; no `.env` or credential-pattern matches were found in the complete reachable history.
 - [x] TypeScript check, all 30 automated tests, production build, health endpoint, and route manifest passed.
 - [x] Deployment state is reported accurately: the live deployment URL and HTTP 200 checks are documented; availability is not represented as a guarantee.
 - [ ] Complete manual keyboard-only, screen-reader, cross-device, and WCAG 2.2 AA review remains outstanding.

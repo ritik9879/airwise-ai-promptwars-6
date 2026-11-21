@@ -81,7 +81,7 @@ pnpm test
 pnpm build
 ```
 
-Verified in the current Sandbox on 2026-11-21: `pnpm typecheck` passed; `pnpm test` passed (3 test files, 30 tests); `pnpm build` passed (Vite production bundle: 1587 modules). A live `/api/health` request returned `{"status":"ok","service":"AirWise AI"}`, and `/manus-routes.json` returned the single `/` route. One earlier Open-Meteo request for Delhi successfully returned modeled U.S. AQI and pollutant fields; this is a one-time observation, not a provider-availability guarantee. The API fixtures verify Unix-to-ISO timestamp normalization, while the browser formats both the current timestamp and chart labels in the selected location's timezone. Automated checks do not replace manual assistive-technology or all-device review. See the [feature and submission verification matrix](docs/submission-verification.md) for per-area evidence and unverified items.
+Verified in the current Sandbox on 2026-11-22: `pnpm typecheck` passed; `pnpm test` passed (3 test files, 30 tests); `pnpm build` passed (Vite production bundle: 1,587 modules). The production server started locally; `/` returned HTTP 200, `/api/health` returned `{"status":"ok","service":"AirWise AI"}`, and `/manus-routes.json` returned the single `/` route. The live deployment endpoints were separately checked over HTTPS. One earlier Open-Meteo request for Delhi successfully returned modeled U.S. AQI and pollutant fields; this is a one-time observation, not a provider-availability guarantee. The API fixtures verify Unix-to-ISO timestamp normalization, while the browser formats both the current timestamp and chart labels in the selected location's timezone. Automated checks do not replace manual assistive-technology or all-device review. See the [feature and submission verification matrix](docs/submission-verification.md) for per-area evidence and unverified items.
 
 ## Deployment
 
@@ -89,7 +89,7 @@ A Dockerfile builds the client and starts the Express server on `PORT` (default 
 
 ## Public source repository
 
-The complete source submission is published at [github.com/ritik9879/airwise-ai-promptwars](https://github.com/ritik9879/airwise-ai-promptwars). It contains the application source, tests, documentation, environment example, and deployment files. Branch count, GitHub-reported repository size including history, and final publication checks are recorded in [the submission verification matrix](docs/submission-verification.md).
+The complete source submission is published at [github.com/ritik9879/airwise-ai-promptwars](https://github.com/ritik9879/airwise-ai-promptwars). It contains the application source, tests, documentation, environment example, and deployment files. Its single `main` branch, verified size including Git history, and final publication checks are recorded in [the submission verification matrix](docs/submission-verification.md).
 
 ## Security, privacy, and accessibility
 
