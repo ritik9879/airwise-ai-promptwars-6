@@ -46,12 +46,12 @@ These checks establish local behavior at test time. The separate public checks a
 
 ## Submission repository
 
-The user-selected target is [github.com/ritik9879/airwise-ai-promptwars-6](https://github.com/ritik9879/airwise-ai-promptwars-6). The application checkpoint `74e9ce9d98f7e32d90dbcd18e06ef1e8a0eb1e12` was pushed to `main`; the public repository has exactly one branch (`main`), 39 tracked files, and a 256 KiB mirror clone including Git history, well below 10 MB. A scan of all 124 reachable Git objects found zero matches for checked private-key/common-token patterns; the tracked tree contains no dotenv files except the allowed `.env.example`. Pattern scans are not proof against every possible secret format. The Manus-managed repository remains the canonical WebDev checkpoint repository; GitHub is a separate user-requested source copy. Do not automatically resubmit to PromptWars.
+The user-selected target is [github.com/ritik9879/airwise-ai-promptwars-6](https://github.com/ritik9879/airwise-ai-promptwars-6). The application checkpoint `74e9ce9d98f7e32d90dbcd18e06ef1e8a0eb1e12` was pushed to `main`; the public repository has exactly one branch (`main`), 39 tracked files, and a mirror clone including Git history under 1 MiB, well below 10 MB. A scan of all reachable Git objects found zero matches for checked private-key/common-token patterns; the tracked tree contains no dotenv files except the allowed `.env.example`. Pattern scans are not proof against every possible secret format. The Manus-managed repository remains the canonical WebDev checkpoint repository; GitHub is a separate user-requested source copy. Do not automatically resubmit to PromptWars.
 
 ## Submission-compliance checklist
 
 - [x] Selected destination URL confirmed: `https://github.com/ritik9879/airwise-ai-promptwars-6`; it was public and empty before delivery.
-- [x] Push audited application checkpoint `74e9ce9d98f7e32d90dbcd18e06ef1e8a0eb1e12` to exactly the selected GitHub repository on `main`; verify exactly one branch and repository/history under 10 MB (256 KiB mirror clone).
+- [x] Push audited application checkpoint `74e9ce9d98f7e32d90dbcd18e06ef1e8a0eb1e12` to exactly the selected GitHub repository on `main`; verify exactly one branch and repository/history under 10 MB (under 1 MiB mirror clone).
 - [x] Scan current files and all reachable Git history for credentials; no checked-pattern matches or unauthorized dotenv files found.
 - [x] TypeScript, all 57 automated tests, production build, and local endpoint/assistant smoke tests passed on 2026-11-24.
 - [x] Publish the audited Manus checkpoint and verify the public homepage, health endpoint, route manifest, and assistant for the published revision.
