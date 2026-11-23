@@ -8,7 +8,16 @@ describe('US AQI presentation rules', () => {
   it.each([[0, 'Good'], [50, 'Good'], [51, 'Moderate'], [100, 'Moderate'], [101, 'Unhealthy for sensitive groups'], [150, 'Unhealthy for sensitive groups'], [151, 'Unhealthy'], [201, 'Very unhealthy'], [301, 'Hazardous']])('categorizes AQI %i consistently', (aqi, category) => {
     expect(aqiBand(aqi)?.category).toBe(category);
   });
-  it('does not categorize missing or invalid values', () => { expect(aqiBand(null)).toBeNull(); expect(aqiBand(Number.NaN)).toBeNull(); expect(aqiBand(-1)).toBeNull(); });
+  it.each([[50.4, 'Good'], [50.5, 'Moderate'], [100.4, 'Moderate'], [100.5, 'Unhealthy for sensitive groups'], [200.4, 'Unhealthy'], [200.5, 'Very unhealthy']])('rounds AQI %s before categorizing it', (aqi, category) => {
+    expect(aqiBand(aqi)?.category).toBe(category);
+  });
+  it('categorizes the maximum and rejects missing, invalid, or out-of-range values', () => {
+    expect(aqiBand(500)?.category).toBe('Hazardous');
+    expect(aqiBand(null)).toBeNull();
+    expect(aqiBand(Number.NaN)).toBeNull();
+    expect(aqiBand(-1)).toBeNull();
+    expect(aqiBand(501)).toBeNull();
+  });
   it('labels pollutant concentrations with the right unit, not as AQI', () => { expect(formatConcentration(12.34)).toBe('12.3 µg/m³'); expect(formatConcentration(null)).toBe('—'); });
 });
 
@@ -43,6 +52,13 @@ describe('deterministic recommendations', () => {
     expect(getRecommendation({ aqi: 175, household: 'general', activity: 'vigorous' }).action).toContain('Skip the outdoor workout');
     expect(getRecommendation({ aqi: 230, household: 'older' }).priority).toBe('high');
   });
+  it('keeps displayed rounded AQI bands and daily actions consistent at decimal boundaries', () => {
+    expect(getRecommendation({ aqi: 50.4, household: 'general' }).rule).toContain('0–50');
+    expect(getRecommendation({ aqi: 50.5, household: 'general' }).rule).toContain('51–100');
+    expect(makeDailyActions({ aqi: 100.4, household: 'general' }, false).join(' ')).not.toContain('Keep windows closed');
+    expect(makeDailyActions({ aqi: 100.5, household: 'general' }, false).join(' ')).toContain('Keep windows closed');
+    expect(makeDailyActions({ aqi: 501, household: 'general' }, false).join(' ')).toContain('data is unavailable');
+  });
   it('does not invent a cleaner hour without an hourly series', () => {
     expect(makeDailyActions({ aqi: 170, household: 'general' }, false).join(' ')).toContain('will not guess a cleaner time');
   });
@@ -68,6 +84,19 @@ describe('emissions estimates', () => {
   });
   it('rejects invalid or implausibly large distances', () => {
     expect(() => tripEmissionsKg(-1, 'car')).toThrow(RangeError);
+    expect(() => tripEmissionsKg(Number.NaN, 'car')).toThrow(RangeError);
+    expect(() => tripEmissionsKg(Number.POSITIVE_INFINITY, 'car')).toThrow(RangeError);
     expect(() => tripEmissionsKg(1001, 'car')).toThrow(RangeError);
+  });
+  it('accepts the exact distance limits and handles a zero-emission baseline', () => {
+    expect(tripEmissionsKg(0, 'car')).toBe(0);
+    expect(tripEmissionsKg(1000, 'car')).toBeCloseTo(172.65);
+    const result = compareTrip(10, 'walk', 'bus');
+    expect(result.baselineKg).toBe(0);
+    expect(result.alternativeKg).toBeCloseTo(1.0151);
+    expect(result.avoidedKg).toBeCloseTo(-1.0151);
+    expect(result.percent).toBeNull();
+    expect(compareTrip(0, 'car', 'bus').percent).toBeNull();
+    expect(compareTrip(10, 'walk', 'cycle')).toMatchObject({ baselineKg: 0, alternativeKg: 0, avoidedKg: 0, percent: null });
   });
 });

@@ -15,12 +15,12 @@ export function localizedRecommendation(recommendation: Recommendation, aqi: num
 export const copy = {
   en: {
     nav: { dashboard: 'Overview', planner: 'Daily planner', indoor: 'Indoor air', mobility: 'Eco mobility', impact: 'Impact calculator', family: 'Family mode', community: 'Community', assistant: 'AI assistant', settings: 'Data & settings' },
-    status: { live: 'Live model data', recent: 'Recently updated', stale: 'Stale data', unavailable: 'Data unavailable', demo: 'Demonstration sample' },
+    status: { live: 'Live model data', recent: 'Recently updated', stale: 'Stale data', unavailable: 'Data unavailable', loading: 'Loading', demo: 'Demonstration sample' },
     search: 'Search a city or place', searchButton: 'Search', locate: 'Use my location', source: 'Source', loading: 'Loading air-quality data…', tryDemo: 'View labeled demo data', noData: 'No live reading is available. AirWise will not substitute a made-up value.',
   },
   hi: {
     nav: { dashboard: 'डैशबोर्ड', planner: 'दैनिक योजना', indoor: 'घर की हवा', mobility: 'पर्यावरण-अनुकूल यात्रा', impact: 'प्रभाव कैलकुलेटर', family: 'परिवार मोड', community: 'समुदाय', assistant: 'AI सहायक', settings: 'डेटा और सेटिंग्स' },
-    status: { live: 'लाइव मॉडल डेटा', recent: 'हाल में अपडेट', stale: 'पुराना डेटा', unavailable: 'डेटा उपलब्ध नहीं', demo: 'डेमो नमूना' },
+    status: { live: 'लाइव मॉडल डेटा', recent: 'हाल में अपडेट', stale: 'पुराना डेटा', unavailable: 'डेटा उपलब्ध नहीं', loading: 'लोड हो रहा है', demo: 'डेमो नमूना' },
     search: 'शहर या स्थान खोजें', searchButton: 'खोजें', locate: 'मेरी लोकेशन उपयोग करें', source: 'स्रोत', loading: 'वायु गुणवत्ता डेटा लोड हो रहा है…', tryDemo: 'स्पष्ट डेमो डेटा देखें', noData: 'लाइव रीडिंग उपलब्ध नहीं है। AirWise कोई मनगढ़ंत मान नहीं दिखाएगा।',
   },
 } as const;

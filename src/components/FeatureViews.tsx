@@ -35,10 +35,69 @@ export function Mobility({ air }: { air: AirQuality | null }) {
 }
 
 export function ImpactCalculator() {
-  const [distance, setDistance] = useState(10); const [baseline, setBaseline] = useState<Mode>('car'); const [alternative, setAlternative] = useState<Mode>('bus');
+  const [distance, setDistance] = useState(10);
+  const [baseline, setBaseline] = useState<Mode>('car');
+  const [alternative, setAlternative] = useState<Mode>('bus');
   const result = useMemo(() => compareTrip(distance, baseline, alternative), [distance, baseline, alternative]);
   const increase = result.avoidedKg < 0;
-  return <div className="view-stack"><div className="page-intro"><div><p className="eyebrow">WHAT-IF SIMULATOR</p><h1>See what a small switch could change.</h1><p>Compare estimated trip emissions under transparent assumptions.</p></div><span className="ai-pill"><ArrowRightLeft size={15}/> Change any input</span></div><section className="tool-layout"><article className="card form-card"><p className="eyebrow">SCENARIO A → B</p><h2>Set up a comparison</h2><label>Trip distance <span className="range-value">{distance} km</span><input type="range" min="1" max="50" value={distance} onChange={(e) => setDistance(Number(e.target.value))} aria-label="Scenario trip distance in kilometres"/></label><label>Baseline scenario<select value={baseline} onChange={(e) => setBaseline(e.target.value as Mode)}>{modes.map((m) => <option key={m} value={m}>{MODE_LABELS[m]}</option>)}</select></label><label>Alternative scenario<select value={alternative} onChange={(e) => setAlternative(e.target.value as Mode)}>{modes.map((m) => <option key={m} value={m}>{MODE_LABELS[m]}</option>)}</select></label></article><article className="card impact-result"><p className="eyebrow">ESTIMATED PER TRIP</p><h2>{Math.abs(result.avoidedKg).toFixed(2)} <span>kg CO₂e {increase ? 'increase' : 'avoided'}</span></h2><div className="impact-bar" aria-label={`Estimated emissions ${increase ? 'increase' : 'reduction'} ${Math.abs(result.percent).toFixed(0)} percent`}><span style={{ width: `${Math.max(2, Math.min(100, Math.abs(result.percent)))}%` }}/></div><div className="impact-numbers"><div><span>Scenario A</span><strong>{result.baselineKg.toFixed(2)} kg</strong></div><div><span>Scenario B</span><strong>{result.alternativeKg.toFixed(2)} kg</strong></div><div><span>Difference</span><strong>{increase ? '+' : '−'}{Math.abs(result.percent).toFixed(0)}%</strong></div></div><p className="estimate-label"><Leaf size={16}/> Estimated, not measured</p><details className="factor-details"><summary>How this is calculated</summary><p>Distance × mode factor = estimated CO₂e per passenger trip. {FACTOR_VERSION} factors are shown in the mobility advisor. Carpool assumes two occupants; walking and cycling exclude lifecycle emissions. A negative avoided amount means scenario B emits more than scenario A.</p></details></article></section></div>;
+  const noChange = result.avoidedKg === 0;
+  const percentage = result.percent === null ? null : Math.abs(result.percent);
+  const percentageDescription = percentage === null
+    ? 'Percentage difference unavailable because baseline emissions are zero.'
+    : noChange ? 'No estimated emissions change.' : `Estimated emissions ${increase ? 'increase' : 'reduction'} ${percentage.toFixed(0)} percent.`;
+
+  return (
+    <div className="view-stack">
+      <div className="page-intro">
+        <div>
+          <p className="eyebrow">WHAT-IF SIMULATOR</p>
+          <h1>See what a small switch could change.</h1>
+          <p>Compare estimated trip emissions under transparent assumptions.</p>
+        </div>
+        <span className="ai-pill"><ArrowRightLeft size={15} /> Change any input</span>
+      </div>
+      <section className="tool-layout">
+        <article className="card form-card">
+          <p className="eyebrow">SCENARIO A → B</p>
+          <h2>Set up a comparison</h2>
+          <label>
+            Trip distance <span className="range-value">{distance} km</span>
+            <input type="range" min="1" max="50" value={distance} onChange={(event) => setDistance(Number(event.target.value))} aria-label="Scenario trip distance in kilometres" />
+          </label>
+          <label>
+            Baseline scenario
+            <select value={baseline} onChange={(event) => setBaseline(event.target.value as Mode)}>
+              {modes.map((mode) => <option key={mode} value={mode}>{MODE_LABELS[mode]}</option>)}
+            </select>
+          </label>
+          <label>
+            Alternative scenario
+            <select value={alternative} onChange={(event) => setAlternative(event.target.value as Mode)}>
+              {modes.map((mode) => <option key={mode} value={mode}>{MODE_LABELS[mode]}</option>)}
+            </select>
+          </label>
+        </article>
+        <article className="card impact-result">
+          <p className="eyebrow">ESTIMATED PER TRIP</p>
+          <h2>{Math.abs(result.avoidedKg).toFixed(2)} <span>kg CO₂e {noChange ? 'no change' : increase ? 'increase' : 'avoided'}</span></h2>
+          <div className="impact-bar" role="img" aria-label={percentageDescription}>
+            <span style={{ width: `${Math.max(2, Math.min(100, percentage ?? 2))}%` }} />
+          </div>
+          <div className="impact-numbers">
+            <div><span>Scenario A</span><strong>{result.baselineKg.toFixed(2)} kg</strong></div>
+            <div><span>Scenario B</span><strong>{result.alternativeKg.toFixed(2)} kg</strong></div>
+            <div><span>Difference</span><strong>{percentage === null ? '—' : noChange ? '0% change' : `${increase ? '+' : '−'}${percentage.toFixed(0)}%`}</strong></div>
+          </div>
+          {percentage === null && <p className="fineprint">Percentage comparison is undefined when baseline emissions are zero.</p>}
+          <p className="estimate-label"><Leaf size={16} /> Estimated, not measured</p>
+          <details className="factor-details">
+            <summary>How this is calculated</summary>
+            <p>Distance × mode factor = estimated CO₂e per passenger trip. {FACTOR_VERSION} factors are shown in the mobility advisor. Carpool assumes two occupants; walking and cycling exclude lifecycle emissions. A negative avoided amount means scenario B emits more than scenario A.</p>
+          </details>
+        </article>
+      </section>
+    </div>
+  );
 }
 
 export function FamilyMode({ household, setHousehold }: { household: Household; setHousehold: (value: Household) => void }) {
@@ -58,5 +117,5 @@ export function Community() {
 }
 
 export function Settings({ air, demo, language, setLanguage, onRefresh, onDemo }: { air: AirQuality | null; demo: boolean; language: 'en'|'hi'; setLanguage: (v: 'en'|'hi')=>void; onRefresh: ()=>void; onDemo: ()=>void }) {
-  return <div className="view-stack"><div className="page-intro"><div><p className="eyebrow">TRANSPARENCY & CONTROLS</p><h1>Data you can understand.</h1><p>See what AirWise uses, what it estimates, and what stays local.</p></div><span className="ai-pill"><CircleHelp size={15}/> Open methods</span></div><div className="settings-grid"><section className="card settings-panel"><p className="eyebrow">LANGUAGE</p><h2>Choose your interface</h2><div className="language-buttons"><button className={language === 'en' ? 'active' : ''} onClick={() => setLanguage('en')}>English</button><button className={language === 'hi' ? 'active' : ''} onClick={() => setLanguage('hi')}>हिन्दी</button></div><p className="fineprint">Key navigation and status labels are translated. Assistant replies can be requested in the selected language.</p></section><section className="card settings-panel"><p className="eyebrow">AIR-QUALITY SOURCE</p><h2>Provider & confidence</h2><p>{air?.source ?? 'Open-Meteo Air Quality API'}</p><p className="fineprint">U.S. AQI and pollutant values are CAMS-based modeled output on a regional grid, not a local monitoring station or indoor sensor. Current endpoint results refresh in a short cache; a stale timestamp is labeled.</p><div className="source-controls"><button className="secondary-button" onClick={onRefresh}>Refresh air data</button><button className="text-button" onClick={onDemo}>Switch to sample demo</button></div></section><section className="card settings-panel"><p className="eyebrow">AI & PRIVACY</p><h2>Bounded use of AI</h2><p>When available, a server-side language model personalizes and explains guidance using the question and selected context. Deterministic AQI rules remain the source of critical precautions.</p><p className="fineprint">No account, saved chat history, or personal medical profile. AI responses may be incomplete; verify important decisions with local public-health sources.</p></section><section className="card settings-panel"><p className="eyebrow">ESTIMATES</p><h2>Transport assumptions</h2><p>Impact and mode comparisons use 2026 UK Government factors as transparent illustrative proxies. They are not measured and may not reflect local vehicles, occupancy, energy mix, route, or transit options.</p><p className="fineprint">Walking/cycling are zero direct travel emissions only. Carpool uses two occupants. Personal exposure is considered separately from CO₂e.</p></section></div></div>;
+  return <div className="view-stack"><div className="page-intro"><div><p className="eyebrow">TRANSPARENCY & CONTROLS</p><h1>Data you can understand.</h1><p>See what AirWise uses, what it estimates, and what stays local.</p></div><span className="ai-pill"><CircleHelp size={15}/> Open methods</span></div><div className="settings-grid"><section className="card settings-panel"><p className="eyebrow">LANGUAGE</p><h2>Choose your interface</h2><div className="language-buttons"><button className={language === 'en' ? 'active' : ''} onClick={() => setLanguage('en')}>English</button><button className={language === 'hi' ? 'active' : ''} onClick={() => setLanguage('hi')}>हिन्दी</button></div><p className="fineprint">Key navigation and status labels are translated. Assistant replies can be requested in the selected language.</p></section><section className="card settings-panel"><p className="eyebrow">AIR-QUALITY SOURCE</p><h2>Provider & confidence</h2><p>{air?.source ?? 'Open-Meteo Air Quality API'}</p><p className="fineprint">U.S. AQI and pollutant values are CAMS-based modeled output on a regional grid, not a local monitoring station or indoor sensor. Current endpoint results refresh in a short cache; a stale timestamp is labeled.</p><div className="source-controls"><button className="secondary-button" onClick={onRefresh}>Refresh air data</button><button className="text-button" onClick={onDemo}>Switch to sample demo</button></div></section><section className="card settings-panel"><p className="eyebrow">AI & PRIVACY</p><h2>Bounded use of AI</h2><p>When available, a server-side language model personalizes and explains guidance using the question and selected context. On submit, your question, selected location, available AQI, household preference, activity preference, language, and rules-based precaution are sent to the configured AI service; check that service's privacy terms before sharing anything sensitive. Deterministic AQI rules remain the source of critical precautions.</p><p className="fineprint">AirWise does not save chat, create an account, or store a personal medical profile. AI responses may be incomplete; verify important decisions with local public-health sources. Avoid sharing personal medical details.</p></section><section className="card settings-panel"><p className="eyebrow">ESTIMATES</p><h2>Transport assumptions</h2><p>Impact and mode comparisons use 2026 UK Government factors as transparent illustrative proxies. They are not measured and may not reflect local vehicles, occupancy, energy mix, route, or transit options.</p><p className="fineprint">Walking/cycling are zero direct travel emissions only. Carpool uses two occupants. Personal exposure is considered separately from CO₂e.</p></section></div></div>;
 }

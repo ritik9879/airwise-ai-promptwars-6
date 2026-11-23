@@ -18,8 +18,9 @@ export const AQI_BANDS: AqiBand[] = [
 ];
 
 export function aqiBand(value: number | null | undefined): AqiBand | null {
-  if (value == null || !Number.isFinite(value) || value < 0) return null;
-  return AQI_BANDS.find((band) => value <= band.high) ?? AQI_BANDS[AQI_BANDS.length - 1];
+  if (value == null || !Number.isFinite(value) || value < 0 || value > 500) return null;
+  const displayedIndex = Math.round(value);
+  return AQI_BANDS.find((band) => displayedIndex <= band.high) ?? AQI_BANDS[AQI_BANDS.length - 1];
 }
 
 export type Freshness = 'live' | 'recent' | 'stale' | 'unavailable';

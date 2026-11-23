@@ -19,5 +19,6 @@ export function compareTrip(distanceKm: number, baseline: Mode, alternative: Mod
   const baselineKg = tripEmissionsKg(distanceKm, baseline);
   const alternativeKg = tripEmissionsKg(distanceKm, alternative);
   const avoidedKg = baselineKg - alternativeKg;
-  return { baselineKg, alternativeKg, avoidedKg, percent: baselineKg > 0 ? (avoidedKg / baselineKg) * 100 : 0 };
+  const percent = baselineKg > 0 ? (avoidedKg / baselineKg) * 100 : null;
+  return { baselineKg, alternativeKg, avoidedKg, percent };
 }

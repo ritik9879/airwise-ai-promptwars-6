@@ -39,10 +39,12 @@ export function getRecommendation({ aqi, household, activity = 'routine' }: AirC
 export function makeDailyActions(context: AirContext, hasHourly: boolean): string[] {
   const recommendation = getRecommendation(context);
   const actions = [recommendation.action];
-  if (context.aqi != null && context.aqi > 100) {
+  const validBand = aqiBand(context.aqi);
+  const roundedAqi = context.aqi == null ? null : Math.round(context.aqi);
+  if (validBand && roundedAqi !== null && roundedAqi > 100) {
     actions.push(hasHourly ? 'Use the displayed modeled hourly series to compare timing; treat it as guidance, not a guarantee.' : 'No hourly series is available, so AirWise will not guess a cleaner time.');
     actions.push('Keep windows closed while outdoor pollution is elevated when practical; ventilate with outdoor air when conditions improve.');
-  } else if (context.aqi != null) {
+  } else if (validBand) {
     actions.push('Ventilate when it is comfortable and outdoor conditions remain favorable.');
   } else {
     actions.push('Check a trusted local air-quality source before planning prolonged outdoor exercise.');
